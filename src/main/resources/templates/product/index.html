@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<!-- replacing the head with title  -->
+<head th:replace="~{_layouts/base :: head(~{::title})}">
+    <title th:fragment="title">Produtos</title>
+</head>
+<body>
+<!-- replacing the main content -->
+<main th:replace="~{_layouts/base :: layout(~{::content})}">
+    <div th:fragment="content">
+        <div>
+            <h1>Produtos</h1>
+            <hr>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>
+
