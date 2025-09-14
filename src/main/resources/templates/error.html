@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<!-- replacing the head with title  -->
+<head th:replace="~{_layouts/base :: head(~{::title})}">
+    <title th:fragment="title">Erro 404!</title>
+</head>
+<body>
+<!-- replacing the main content -->
+<main th:replace="~{_layouts/base :: layout(~{::content})}">
+    <div th:fragment="content">
+        <div style="min-height: 600px" class="d-flex justify-content-center align-items-center flex-column text-center">
+            <h1 class="text-danger">Erro</h1>
+            <hr>
+            <p><strong>Data/Hora:</strong> <span th:text="${error.getTimeStamp}"></span></p>
+            <p><strong>Mensagem:</strong> <span th:text="${error.getMessage}"></span></p>
+            <p><strong>Detalhes:</strong> <span th:text="${error.getDetails}"></span></p>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>
+

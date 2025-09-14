@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: MyStore
+  mvc:
+    throw-exception-if-no-handler-found: true
+
