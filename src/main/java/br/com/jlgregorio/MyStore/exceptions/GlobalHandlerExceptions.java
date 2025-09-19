@@ -12,7 +12,6 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalHandlerExceptions {
 
-
     @ExceptionHandler(Exception.class)
     public final String handleAllExceptions(
             Exception ex, WebRequest request, Model model
