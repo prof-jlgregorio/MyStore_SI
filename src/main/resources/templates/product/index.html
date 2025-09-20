@@ -11,6 +11,28 @@
         <div style="min-height: 600px" class="p-3">
             <h1 class="text-primary">Produtos</h1>
             <hr>
+            <button class="btn btn-primary">Adicionar Produto</button>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th colspan="3">Operações</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${products}">
+                        <td th:text="${product.id}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.category.name}"></td>
+                        <td> <button class="btn btn-primary">Visualizar</button> </td>
+                        <td> <button class="btn btn-info">Editar</button> </td>
+                        <td> <button class="btn btn-danger">Excluir</button> </td>
+                    </tr>
+                </tbody>
+
+            </table>
         </div>
     </div>
 </main>
