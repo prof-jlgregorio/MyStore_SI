@@ -11,7 +11,7 @@
         <div style="min-height: 600px" class="p-3">
             <h1 class="text-primary">Produtos</h1>
             <hr>
-            <button class="btn btn-primary">Adicionar Produto</button>
+            <a th:href="@{/products/create}" class="btn btn-primary">Adicionar Produto</a>
             <table class="table">
                 <thead>
                 <tr>
@@ -31,8 +31,8 @@
                         <td> <button class="btn btn-danger">Excluir</button> </td>
                     </tr>
                 </tbody>
-
             </table>
+            <div th:replace="~{_fragments/toast :: toast(${message})}"></div>
         </div>
     </div>
 </main>

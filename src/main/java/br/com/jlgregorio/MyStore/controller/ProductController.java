@@ -1,5 +1,6 @@
 package br.com.jlgregorio.MyStore.controller;
 
+import br.com.jlgregorio.MyStore.exceptions.ResourceNotFoundException;
 import br.com.jlgregorio.MyStore.model.CategoryModel;
 import br.com.jlgregorio.MyStore.model.ProductModel;
 import br.com.jlgregorio.MyStore.repository.CategoryRepository;
@@ -7,10 +8,7 @@ import br.com.jlgregorio.MyStore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,6 +53,33 @@ public class ProductController {
         productRepository.save(productModel);
         redirectAttributes.addFlashAttribute("message",
                 "Produto salvo com sucesso!");
+        return "redirect:/products";
+    }
+
+    @PutMapping("/{id}")
+    public String update(@PathVariable long id,
+            @ModelAttribute("product") ProductModel productModel,
+                         RedirectAttributes redirectAttributes){
+        var found = productRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Produto não encontrado!")
+        );
+        found.setName(productModel.getName());
+        found.setCategory(productModel.getCategory());
+        productRepository.save(found);
+        redirectAttributes.addFlashAttribute(
+                "message", "Produto atualizado com sucesso!");
+        return "redirect:/products";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable long id,
+                         RedirectAttributes redirectAttributes){
+        var found = productRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Produto não encontrado!")
+        );
+        productRepository.delete(found);
+        redirectAttributes.addFlashAttribute("message",
+                "Produto excluído com sucesso!");
         return "redirect:/products";
     }
 
