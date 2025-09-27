@@ -27,12 +27,41 @@
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.category.name}"></td>
                         <td> <button class="btn btn-primary">Visualizar</button> </td>
-                        <td> <button class="btn btn-info">Editar</button> </td>
-                        <td> <button class="btn btn-danger">Excluir</button> </td>
+                        <td> <a th:href="${'/products/' + product.id + '/edit'}"  class="btn btn-info">Editar</a> </td>
+
+                        <td>
+                            <!-- Form to delete - the action direct to endpont to delete, and define the path variable             -->
+                            <form class="delete-form" th:action="@{/products/{id}(id=${product.id})}" method="post">
+                                <!-- hidden method to define the correct HTTP verb - delete.    -->
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-danger">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>
             <div th:replace="~{_fragments/toast :: toast(${message})}"></div>
+
+            <!-- add the script to modal        -->
+            <script th:src="@{/js/modal.js}"></script>
+
+            <!-- event listener to show the modal before submit        -->
+            <script>
+                document.querySelectorAll('.delete-form').forEach(form => {
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+                        const confirm = await showConfirmModal("Confirme", "Deseja excluir esse produto?");
+                        if(confirm){
+                            form.submit();
+                        }
+                    })
+                })
+            </script>
+
+
+
         </div>
     </div>
 </main>

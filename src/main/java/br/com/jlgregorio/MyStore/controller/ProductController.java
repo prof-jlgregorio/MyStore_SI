@@ -56,6 +56,17 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    @GetMapping("/{id}/edit")
+    public ModelAndView edit( @PathVariable long id ){
+        var found = productRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Produto não encontrado!")
+        );
+        ModelAndView mv = new ModelAndView("product/edit");
+        mv.addObject("product", found);
+        mv.addObject("categories", categoryRepository.findAll());
+        return mv;
+    }
+
     @PutMapping("/{id}")
     public String update(@PathVariable long id,
             @ModelAttribute("product") ProductModel productModel,
