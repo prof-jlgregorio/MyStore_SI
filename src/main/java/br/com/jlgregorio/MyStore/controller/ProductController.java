@@ -6,6 +6,8 @@ import br.com.jlgregorio.MyStore.model.ProductModel;
 import br.com.jlgregorio.MyStore.repository.CategoryRepository;
 import br.com.jlgregorio.MyStore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -94,5 +96,12 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    @GetMapping("/{id}/show")
+    public ResponseEntity<ProductModel> show(@PathVariable long id){
+        var found = productRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("Produto não encontrado!")
+        );
+        return new ResponseEntity<>(found, HttpStatus.OK);
+    }
 
 }

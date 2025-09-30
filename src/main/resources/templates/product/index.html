@@ -26,7 +26,12 @@
                         <td th:text="${product.id}"></td>
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.category.name}"></td>
-                        <td> <button class="btn btn-primary">Visualizar</button> </td>
+
+                        <td>
+                            <button th:onclick="getProductById([[${product.id}]])" type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#viewModal">Visualizar</button>
+                        </td>
+
+
                         <td> <a th:href="${'/products/' + product.id + '/edit'}"  class="btn btn-info">Editar</a> </td>
 
                         <td>
@@ -60,9 +65,50 @@
                 })
             </script>
 
-
-
+            <script>
+                <!--  create an asynchronous function   -->
+                async function getProductById(id) {
+                    <!-- perform the request   -->
+                    const response = await fetch(`/products/${id}/show`)
+                    <!-- verifies the response status        -->
+                    if(!response.ok){
+                        alert(`Erro: HTTP ${response.status}`);
+                    } else {
+                         <!-- get the product, converts to json and set the HTML values             -->
+                         const product = await response.json();
+                         document.getElementById("productName").innerHTML = product.name
+                         document.getElementById("productCategory").innerHTML = product.category.name
+                    }
+                }
+            </script>
         </div>
+
+        <!-- Modal to show -->
+        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalLabel">Exibir Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <p id="productName"></p>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <p id="productCategory"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </main>
 </body>
