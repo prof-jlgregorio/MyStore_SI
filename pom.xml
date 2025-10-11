@@ -66,6 +66,13 @@
 			<version>3.5.5</version>
 		</dependency>
 
+       <!--	 Flyway is a dependency to work with migrations	-->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>9.22.3</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -74,6 +81,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>9.22.3</version>
+				<configuration>
+					<url>jdbc:postgresql://localhost:5432/mystore</url>
+					<user>postgres</user>
+					<password>postdba</password>
+					<schemas>
+						<schema>public</schema>
+					</schemas>
+					<cleanDisabled>false</cleanDisabled>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
