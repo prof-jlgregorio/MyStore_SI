@@ -122,3 +122,8 @@ INSERT INTO products (name, category_id) VALUES
 ('Pulseira de Prata Feminina 18cm', 20),
 ('Anel Solitário com Zircônia', 20);
 
+-- inserindo usuários
+INSERT INTO users (username, password, enabled, roles)
+VALUES
+    ('admin', '$2a$12$zV3.uxFDiLY2/miia00r.OF82I2Lclj/S7L8G36ZlsXPVka1RVieq', TRUE, 'ADMIN'),
+    ('user',  '$2a$12$zV3.uxFDiLY2/miia00r.OF82I2Lclj/S7L8G36ZlsXPVka1RVieq', TRUE, 'USER');
