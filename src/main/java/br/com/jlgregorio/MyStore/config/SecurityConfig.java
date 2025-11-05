@@ -18,6 +18,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/img/**").permitAll()
+                        .requestMatchers("/categories/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -31,7 +32,14 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout=true")  //após fazer o logout
                         .invalidateHttpSession(true)             //invalida a sessão
                         .deleteCookies("JSESSIONID") //delete os cookies
-                );
+                )
+                .exceptionHandling(ex -> ex.accessDeniedHandler(
+                        (((request, response,
+                           accessDeniedException) -> {
+                            response.sendRedirect(request.getContextPath() +
+                                    "/access-denied?from=" + request.getRequestURI());
+                        } ))
+                ));
         return httpSecurity.build();
     }
 
